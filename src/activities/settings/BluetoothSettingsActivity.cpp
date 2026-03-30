@@ -161,6 +161,13 @@ void BluetoothSettingsActivity::handleMainMenuInput() {
     selectedIndex = (selectedIndex < (kMainMenuItemCount - 1)) ? selectedIndex + 1 : 0;
     requestUpdate();
   }
+   if (mappedInput.wasPressed(MappedInputManager::Button::Left)) {
+    selectedIndex = (selectedIndex > 0) ? selectedIndex - 1 : (kMainMenuItemCount - 1);
+    requestUpdate();
+  } else if (mappedInput.wasPressed(MappedInputManager::Button::Right)) {
+    selectedIndex = (selectedIndex < (kMainMenuItemCount - 1)) ? selectedIndex + 1 : 0;
+    requestUpdate();
+  }
   
   if (mappedInput.wasPressed(MappedInputManager::Button::Confirm)) {
     if (!btMgr) {
@@ -660,7 +667,7 @@ void BluetoothSettingsActivity::renderMainMenu() {
   }
 
   // Button hints
-  const auto labels = mappedInput.mapLabels(tr(STR_BACK), tr(STR_SELECT), tr(STR_DIR_LEFT), tr(STR_DIR_RIGHT));
+  const auto labels = mappedInput.mapLabels(tr(STR_BACK), tr(STR_SELECT), tr(STR_DIR_UP), tr(STR_DIR_DOWN));
   GUI.drawButtonHints(renderer, labels.btn1, labels.btn2, labels.btn3, labels.btn4);
 
   renderer.displayBuffer();

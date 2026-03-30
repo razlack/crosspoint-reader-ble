@@ -108,37 +108,59 @@ void SettingsActivity::loop() {
     return;
   }
 
+// Handle navigation
+  buttonNavigator.onNextRelease([this] {
+    selectedSettingIndex = ButtonNavigator::nextIndex(selectedSettingIndex, settingsCount + 1);
+    requestUpdate();
+  });
+
+  buttonNavigator.onPreviousRelease([this] {
+    selectedSettingIndex = ButtonNavigator::previousIndex(selectedSettingIndex, settingsCount + 1);
+    requestUpdate();
+  });
+
+  buttonNavigator.onNextContinuous([this, &hasChangedCategory] {
+    hasChangedCategory = true;
+    selectedCategoryIndex = ButtonNavigator::nextIndex(selectedCategoryIndex, categoryCount);
+    requestUpdate();
+  });
+
+  buttonNavigator.onPreviousContinuous([this, &hasChangedCategory] {
+    hasChangedCategory = true;
+    selectedCategoryIndex = ButtonNavigator::previousIndex(selectedCategoryIndex, categoryCount);
+    requestUpdate();
+  });
   // Handle navigation
   // Note: ButtonNavigator treats Left+Up as Previous and Right+Down as Next
   // So we must handle category navigation BEFORE calling buttonNavigator to avoid double-triggering
   
   // Category navigation with Left/Right buttons (discrete presses only)
-  bool categoryNavigated = false;
-  if (mappedInput.wasPressed(MappedInputManager::Button::Right)) {
-    selectedCategoryIndex = ButtonNavigator::nextIndex(selectedCategoryIndex, categoryCount);
-    hasChangedCategory = true;
-    categoryNavigated = true;
-    requestUpdate();
-  } else if (mappedInput.wasPressed(MappedInputManager::Button::Left)) {
-    selectedCategoryIndex = ButtonNavigator::previousIndex(selectedCategoryIndex, categoryCount);
-    hasChangedCategory = true;
-    categoryNavigated = true;
-    requestUpdate();
-  }
+  // bool categoryNavigated = false;
+  // if (mappedInput.wasPressed(MappedInputManager::Button::Right)) {
+  //   selectedCategoryIndex = ButtonNavigator::nextIndex(selectedCategoryIndex, categoryCount);
+  //   hasChangedCategory = true;
+  //   categoryNavigated = true;
+  //   requestUpdate();
+  // } else if (mappedInput.wasPressed(MappedInputManager::Button::Left)) {
+  //   selectedCategoryIndex = ButtonNavigator::previousIndex(selectedCategoryIndex, categoryCount);
+  //   hasChangedCategory = true;
+  //   categoryNavigated = true;
+  //   requestUpdate();
+  // }
 
-  // Only handle Up/Down setting navigation if we didn't navigate categories.
-  // Use explicit Up/Down buttons so Left/Right never trigger list movement on release.
-  if (!categoryNavigated) {
-    buttonNavigator.onRelease({MappedInputManager::Button::Down}, [this] {
-      selectedSettingIndex = ButtonNavigator::nextIndex(selectedSettingIndex, settingsCount + 1);
-      requestUpdate();
-    });
+  // // Only handle Up/Down setting navigation if we didn't navigate categories.
+  // // Use explicit Up/Down buttons so Left/Right never trigger list movement on release.
+  // if (!categoryNavigated) {
+  //   buttonNavigator.onRelease({MappedInputManager::Button::Down}, [this] {
+  //     selectedSettingIndex = ButtonNavigator::nextIndex(selectedSettingIndex, settingsCount + 1);
+  //     requestUpdate();
+  //   });
 
-    buttonNavigator.onRelease({MappedInputManager::Button::Up}, [this] {
-      selectedSettingIndex = ButtonNavigator::previousIndex(selectedSettingIndex, settingsCount + 1);
-      requestUpdate();
-    });
-  }
+  //   buttonNavigator.onRelease({MappedInputManager::Button::Up}, [this] {
+  //     selectedSettingIndex = ButtonNavigator::previousIndex(selectedSettingIndex, settingsCount + 1);
+  //     requestUpdate();
+  //   });
+  // }
 
   if (hasChangedCategory) {
     selectedSettingIndex = (selectedSettingIndex == 0) ? 0 : 1;
@@ -290,7 +312,7 @@ void SettingsActivity::render(Activity::RenderLock&&) {
       true);
 
   // Draw help text
-  const auto labels = mappedInput.mapLabels(tr(STR_BACK), tr(STR_TOGGLE), tr(STR_DIR_LEFT), tr(STR_DIR_RIGHT));
+  const auto labels = mappedInput.mapLabels(tr(STR_BACK), tr(STR_TOGGLE), tr(STR_DIR_UP), tr(STR_DIR_DOWN));
   GUI.drawButtonHints(renderer, labels.btn1, labels.btn2, labels.btn3, labels.btn4);
 
   // Always use standard refresh for settings screen
