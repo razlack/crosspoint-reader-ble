@@ -508,6 +508,7 @@ const char* const STRINGS_EN[] = {
     "Next/Prev",
     "Bookerly",
     "Noto Sans",
+    "Lexica Ultralegible",
     "Open Dyslexic",
     "Small",
     "Medium",
@@ -1069,6 +1070,7 @@ const char* const STRINGS_ES[] = {
     "Sig./Ant.",
     "Bookerly",
     "Noto Sans",
+    "Lexica Ultralegible",
     "Open Dyslexic",
     "Peque\xC3"
     "\xB1"
@@ -1864,6 +1866,7 @@ const char* const STRINGS_FR[] = {
     "Suiv/Prec",
     "Bookerly",
     "Noto Sans",
+    "Lexica Ultralegible",
     "Open Dyslexic",
     "Petite",
     "Moyenne",
@@ -2579,6 +2582,7 @@ const char* const STRINGS_DE[] = {
     "rck",
     "Bookerly",
     "Noto Sans",
+    "Lexica Ultralegible",
     "Open Dyslexic",
     "Klein",
     "Mittel",
@@ -3866,6 +3870,7 @@ const char* const STRINGS_CZ[] = {
     "",
     "Bookerly",
     "Noto Sans",
+    "Lexica Ultralegible",
     "Open Dyslexic",
     "Mal\xC3"
     "\xBD"
@@ -4928,6 +4933,7 @@ const char* const STRINGS_PO[] = {
     "x/Ant",
     "Bookerly",
     "Noto Sans",
+    "Lexica Ultralegible",
     "Open Dyslexic",
     "Pequeno",
     "M\xC3"
@@ -10070,6 +10076,7 @@ const char* const STRINGS_RU[] = {
     "",
     "Bookerly",
     "Noto Sans",
+    "Lexica Ultralegible",
     "Open Dyslexic",
     "\xD0"
     "\x9C"
@@ -14206,6 +14213,7 @@ const char* const STRINGS_SV[] = {
     "rra",
     "Bookerly",
     "Noto Sans",
+    "Lexica Ultralegible",
     "\xC3"
     "\x96"
     "ppen dyslektisk",
