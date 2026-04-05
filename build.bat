@@ -1,0 +1,1 @@
+C:\Users\psyod\.platformio\penv\Scripts\pio run --target upload
