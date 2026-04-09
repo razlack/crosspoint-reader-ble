@@ -455,15 +455,24 @@ void HomeActivity::render(RenderLock&&) {
     menuIcons.insert(menuIcons.begin(), Recent);
   }
 
-  if (hasOpdsUrl) {
-    menuItems.insert(menuItems.begin() + 1, tr(STR_OPDS_BROWSER));
-    menuIcons.insert(menuIcons.begin() + 1, Library);
-  }
+  if (SETTINGS.uiTheme == CrossPointSettings::UI_THEME::NEW_THEME) {
+    menuItems = {tr(STR_MENU_RECENT_BOOKS), tr(STR_BROWSE_FILES), tr(STR_NETWORK), tr(STR_SETTINGS_TITLE)};
+    menuIcons = {Recent, Folder, Wifi, Settings};
+    if (hasOpdsUrl) {
+      menuItems.insert(menuItems.begin() + 2, tr(STR_OPDS_BROWSER));
+      menuIcons.insert(menuIcons.begin() + 2, Library);
+    }
+  } else {
+    if (hasOpdsUrl) {
+      menuItems.insert(menuItems.begin() + 1, tr(STR_OPDS_BROWSER));
+      menuIcons.insert(menuIcons.begin() + 1, Library);
+    }
 
-  if constexpr (CrossPointSettings::deepMinesEnabled) {
-    const auto settingsPos = static_cast<int>(menuItems.size()) - 1;
-    menuItems.insert(menuItems.begin() + settingsPos, tr(STR_GAMES));
-    menuIcons.insert(menuIcons.begin() + settingsPos, Book);
+    if constexpr (CrossPointSettings::deepMinesEnabled) {
+      const auto settingsPos = static_cast<int>(menuItems.size()) - 1;
+      menuItems.insert(menuItems.begin() + settingsPos, tr(STR_GAMES));
+      menuIcons.insert(menuIcons.begin() + settingsPos, Book);
+    }
   }
 
   if (!isCardsTheme) {
@@ -474,9 +483,10 @@ void HomeActivity::render(RenderLock&&) {
                             recentBooks, selectorIndex, coverRendered, coverBufferStored, bufferRestored,
                             std::bind(&HomeActivity::storeCoverBuffer, this));
 
+    const int buttonGap = SETTINGS.uiTheme == CrossPointSettings::UI_THEME::NEW_THEME ? 40 : metrics.verticalSpacing;
     GUI.drawButtonMenu(
         renderer,
-        Rect{0, metrics.homeTopPadding + metrics.homeCoverTileHeight + metrics.verticalSpacing, pageWidth,
+        Rect{0, metrics.homeTopPadding + metrics.homeCoverTileHeight + buttonGap, pageWidth,
              pageHeight - (metrics.headerHeight + metrics.homeTopPadding + metrics.verticalSpacing * 2 +
                            metrics.buttonHintsHeight)},
         static_cast<int>(menuItems.size()), selectorIndex - recentCount,

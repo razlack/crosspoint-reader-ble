@@ -132,7 +132,7 @@ class CrossPointSettings {
   enum HIDE_BATTERY_PERCENTAGE { HIDE_NEVER = 0, HIDE_READER = 1, HIDE_ALWAYS = 2, HIDE_BATTERY_PERCENTAGE_COUNT };
 
   // UI Theme
-  enum UI_THEME { CLASSIC = 0, LYRA = 1, LYRA_3_COVERS = 2, CARDS = 3 };
+  enum UI_THEME { CLASSIC = 0, LYRA = 1, LYRA_3_COVERS = 2, NEW_THEME = 3, CARDS = 4 };
 
 #if defined(ENABLE_EXPERIMENTAL_CARDS_THEME)
   static constexpr bool cardsThemeEnabled = true;
@@ -206,7 +206,7 @@ class CrossPointSettings {
   // Long-press chapter skip on side buttons
   uint8_t longPressChapterSkip = 1;
   // UI Theme
-  uint8_t uiTheme = LYRA;
+  uint8_t uiTheme = LYRA_3_COVERS;
   // Sunlight fading compensation
   uint8_t fadingFix = 0;
   // Use book's embedded CSS styles for EPUB rendering (1 = enabled, 0 = disabled)

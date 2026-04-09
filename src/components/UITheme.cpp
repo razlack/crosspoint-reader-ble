@@ -11,6 +11,7 @@
 #include "components/themes/BaseTheme.h"
 #include "components/themes/lyra/Lyra3CoversTheme.h"
 #include "components/themes/lyra/LyraTheme.h"
+#include "components/themes/lyra/NewTheme.h"
 
 namespace {
 constexpr int SKIP_PAGE_MS = 700;
@@ -44,6 +45,11 @@ void UITheme::setTheme(CrossPointSettings::UI_THEME type) {
       LOG_DBG("UI", "Using Lyra 3 Covers theme");
       currentTheme = std::make_unique<Lyra3CoversTheme>();
       currentMetrics = &Lyra3CoversMetrics::values;
+      break;
+    case CrossPointSettings::UI_THEME::NEW_THEME:
+      LOG_DBG("UI", "Using New theme");
+      currentTheme = std::make_unique<NewTheme>();
+      currentMetrics = &NewMetrics::values;
       break;
     case CrossPointSettings::UI_THEME::CARDS:
       LOG_DBG("UI", "Using Cards theme");

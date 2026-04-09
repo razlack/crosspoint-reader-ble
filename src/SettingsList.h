@@ -34,7 +34,7 @@ inline const std::vector<SettingInfo>& getSettingsList() {
           StrId::STR_UI_THEME, &CrossPointSettings::uiTheme,
           [] {
             std::vector<StrId> themes = {StrId::STR_THEME_CLASSIC, StrId::STR_THEME_LYRA,
-                                         StrId::STR_THEME_LYRA_EXTENDED};
+                                         StrId::STR_THEME_LYRA_EXTENDED, StrId::STR_THEME_NEW};
             if constexpr (CrossPointSettings::cardsThemeEnabled) {
               themes.push_back(StrId::STR_THEME_CARDS);
             }
