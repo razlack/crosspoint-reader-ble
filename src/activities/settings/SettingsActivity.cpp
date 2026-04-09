@@ -102,17 +102,18 @@ void SettingsActivity::loop() {
   }
 
   bool categoryNavigated = false;
-  if (mappedInput.wasPressed(MappedInputManager::Button::Right)) {
-    selectedCategoryIndex = ButtonNavigator::nextIndex(selectedCategoryIndex, categoryCount);
-    hasChangedCategory = true;
-    categoryNavigated = true;
-    requestUpdate();
-  } else if (mappedInput.wasPressed(MappedInputManager::Button::Left)) {
-    selectedCategoryIndex = ButtonNavigator::previousIndex(selectedCategoryIndex, categoryCount);
-    hasChangedCategory = true;
-    categoryNavigated = true;
-    requestUpdate();
-  }
+  //  if (mappedInput.wasPressed(MappedInputManager::Button::Right)) {
+  //   selectedCategoryIndex = ButtonNavigator::nextIndex(selectedCategoryIndex, categoryCount);
+  //   hasChangedCategory = true;
+  //   categoryNavigated = true;
+  //   requestUpdate();
+  // } else if (mappedInput.wasPressed(MappedInputManager::Button::Left)) {
+  //   selectedCategoryIndex = ButtonNavigator::previousIndex(selectedCategoryIndex, categoryCount);
+  //   hasChangedCategory = true;
+  //   categoryNavigated = true;
+  //   requestUpdate();
+  // }
+  
 
   if (!categoryNavigated) {
     buttonNavigator.onRelease({MappedInputManager::Button::Down}, [this] {
@@ -121,6 +122,15 @@ void SettingsActivity::loop() {
     });
 
     buttonNavigator.onRelease({MappedInputManager::Button::Up}, [this] {
+      selectedSettingIndex = ButtonNavigator::previousIndex(selectedSettingIndex, settingsCount + 1);
+      requestUpdate();
+    });
+    buttonNavigator.onRelease({MappedInputManager::Button::Right}, [this] {
+      selectedSettingIndex = ButtonNavigator::nextIndex(selectedSettingIndex, settingsCount + 1);
+      requestUpdate();
+    });
+
+    buttonNavigator.onRelease({MappedInputManager::Button::Left}, [this] {
       selectedSettingIndex = ButtonNavigator::previousIndex(selectedSettingIndex, settingsCount + 1);
       requestUpdate();
     });
@@ -262,7 +272,7 @@ void SettingsActivity::render(RenderLock&&) {
       true);
 
   // Draw help text
-  const auto labels = mappedInput.mapLabels(tr(STR_BACK), tr(STR_TOGGLE), tr(STR_DIR_LEFT), tr(STR_DIR_RIGHT));
+  const auto labels = mappedInput.mapLabels(tr(STR_BACK), tr(STR_TOGGLE), tr(STR_DIR_UP), tr(STR_DIR_DOWN));
   GUI.drawButtonHints(renderer, labels.btn1, labels.btn2, labels.btn3, labels.btn4);
 
   // Always use standard refresh for settings screen
